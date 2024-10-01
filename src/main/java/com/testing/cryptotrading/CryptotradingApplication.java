@@ -2,6 +2,7 @@ package com.testing.cryptotrading;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -12,6 +13,7 @@ import com.testing.cryptotrading.crypto.*;
 
 @Component
 @SpringBootApplication
+@EnableAutoConfiguration
 @EnableScheduling
 public class CryptotradingApplication {
 

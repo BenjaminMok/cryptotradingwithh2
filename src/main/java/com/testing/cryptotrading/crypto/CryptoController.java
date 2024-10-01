@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -14,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.testing.cryptotrading.user.Customer;
 
 
 @RestController
@@ -25,10 +25,18 @@ public class CryptoController {
     private CryptoService cryptoService;
 
 
+    //Get all symbol and prices
     @GetMapping("/ticker")
     public List<Crypto> getBestAggregatedPrice() {
         return (List<Crypto>) cryptoService.fetchCryptoList();
     }
+
+    //Get prices by symbol
+        @GetMapping("/ticker/prices")
+        public List<Crypto> getBestAggregatedPriceBySymbol(@RequestParam String symbol) {
+            return cryptoService.searchBySymbol(symbol);
+        }
+
     
     @Scheduled(fixedRate = 10000) //10secs interval
     public void updateBestAggregatedPrice() {
@@ -47,8 +55,6 @@ public class CryptoController {
                     double huobiAskPrice = huobiCrypto.getBid();
                     double higherAsk = Math.max(binanceAskPrice, huobiAskPrice);
 
-                    System.out.println("bid" + lowerBid);
-                    System.out.println("ask" + higherAsk);
                     cryptoService.updateCrypto(binanceCrypto.getSymbol(), lowerBid, higherAsk);
                 }
             }

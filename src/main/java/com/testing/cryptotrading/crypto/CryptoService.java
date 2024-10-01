@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+
 @Service
 public class CryptoService {
     @Autowired
@@ -25,8 +26,14 @@ public class CryptoService {
     }
 
     // Read operation
-    //Get all customers
+    //Get all symbols & prices
     public List<Crypto> fetchCryptoList() {
         return (List<Crypto>) cryptoRepository.findAll();
     }
+
+    //Get prices based on symbol
+    public List<Crypto>  searchBySymbol(String symbol){
+        return cryptoRepository.searchBySymbol(symbol);
+    }
+
 }

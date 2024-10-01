@@ -1,5 +1,6 @@
 package com.testing.cryptotrading.crypto;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface CryptoRepository extends JpaRepository<Crypto, Long> {
 
     Optional<Crypto> findBySymbol(String symbol);
+
+    List<Crypto> searchBySymbol(String symbol);
 }
